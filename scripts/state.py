@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Estado de progresso do onboarding (idempotencia/resume)."""
-import os, json
+import os, json, tempfile
 
 def _path(user_dir):
     d = os.path.join(user_dir, ".youtube-growth")
@@ -9,10 +9,18 @@ def _path(user_dir):
 
 def state_get(user_dir):
     p = _path(user_dir)
-    return json.load(open(p)) if os.path.exists(p) else {}
+    if not os.path.exists(p):
+        return {}
+    with open(p) as f:
+        return json.load(f)
 
 def state_set(user_dir, **kw):
     s = state_get(user_dir)
     s.update(kw)
-    json.dump(s, open(_path(user_dir), "w"), indent=2)
+    p = _path(user_dir)
+    # Write to temp file in same directory, then atomically replace
+    with tempfile.NamedTemporaryFile(mode='w', dir=os.path.dirname(p), delete=False, suffix='.tmp') as tmp:
+        json.dump(s, tmp, indent=2)
+        tmp_path = tmp.name
+    os.replace(tmp_path, p)
     return s
