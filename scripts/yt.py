@@ -99,8 +99,9 @@ def set_caption(vid, srtfile, lang="pt", name="pt-corrigida"):
 
 # ---------------------------------------------------------------------------
 # Analytics API (CTR, retenção, inscritos, receita) — precisa dos escopos
-# yt-analytics(.monetary).readonly no token. Se falhar por escopo, reautorizar:
-#   ~/.youtube-seo/.venv/bin/python ~/.youtube-seo/yt_auth.py
+# yt-analytics(.monetary).readonly no token. Se falhar por escopo, reautorizar
+# rodando a skill `connect` (ou, manualmente, com YTG_CONFIG_DIR setado:
+#   $YTG_CONFIG_DIR/.venv/bin/python <plugin>/scripts/yt_auth.py)
 # ---------------------------------------------------------------------------
 
 def _report(metrics, days, video=None):

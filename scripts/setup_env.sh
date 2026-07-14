@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Cria o ambiente isolado da skill em ~/.youtube-seo/.venv com as libs do Google.
+# Cria o ambiente isolado da skill em $BASE/.venv (BASE = YTG_CONFIG_DIR, default
+# ~/.youtube-seo) com as libs do Google.
 # Idempotente: pode rodar de novo sem problema. Requer python3 e (uv OU pip).
 set -euo pipefail
 BASE="${YTG_CONFIG_DIR:-$HOME/.youtube-seo}"

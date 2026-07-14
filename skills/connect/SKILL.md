@@ -19,17 +19,28 @@ Oriente, um passo por vez:
 
 ## Passo 2 — Instalar as credenciais
 - Peça o **caminho** do JSON baixado (NUNCA peça pra colar o conteúdo — vai pro histórico).
-- Rode `init_channel.py <channel_id_ou_placeholder> <dir_do_usuario>` para criar o config dir
-  e o wrapper `bin/yt`. (No 1º run o channel_id ainda é desconhecido; use um slug temporário
-  do handle e renomeie depois do whoami se quiser.)
+- O channel_id ainda não é conhecido neste ponto (só depois do 1º `whoami`). Derive um
+  **slug estável** a partir do @handle do canal (já coletado no briefing Q1 do
+  onboarding) — o nome do config dir é interno, nunca aparece pro usuário, então não
+  precisa ser renomeado depois.
+- Rode `export YTG_CONFIG_DIR="$(python3 <plugin>/scripts/init_channel.py <slug> <dir_do_usuario>)"`
+  para criar o config dir e o wrapper `bin/yt`, capturando o path que `init_channel.py`
+  imprime no stdout. **Toda etapa seguinte deste fluxo roda no MESMO shell/ambiente**,
+  com essa variável exportada — `setup_env.sh` e `yt_auth.py` são chamados diretamente
+  (não pelo wrapper `bin/yt`) e resolvem o config dir a partir de `YTG_CONFIG_DIR`; sem
+  ela exportada, eles caem no diretório legado `~/.youtube-seo/`, dessincronizado do
+  `bin/yt` (que aponta pro config dir de `<slug>`) — resultado: `whoami` falha ou lê o
+  token errado.
 - Copie o JSON para `$YTG_CONFIG_DIR/client_secret.json` com `chmod 600`.
 - Valide o tipo: deve ser `"installed"` (Desktop). Se for `"web"`, o usuário criou o tipo
   errado — mande refazer o Passo 1.4.
 
 ## Passo 3 — Ambiente + autorização
-- Rode `setup_env.sh` (cria o venv + libs Google no config dir). Uma vez por canal.
-- Rode `yt_auth.py`. Abre o navegador. Oriente: escolher a conta do canal; no aviso "Google
-  não verificou este app", **Avançado → Acessar (não seguro)** — é o app do próprio usuário.
+- Com `YTG_CONFIG_DIR` ainda exportado no shell, rode `setup_env.sh` (cria o venv + libs
+  Google em `$YTG_CONFIG_DIR/.venv`). Uma vez por canal.
+- Rode `yt_auth.py` (mesmo shell, mesma variável exportada). Abre o navegador. Oriente:
+  escolher a conta do canal; no aviso "Google não verificou este app", **Avançado →
+  Acessar (não seguro)** — é o app do próprio usuário.
 
 ## Passo 4 — Matar a expiração de 7 dias (padrão)
 Com a app em "Testing", o token expira a cada ~7 dias. Oriente o usuário a publicar:

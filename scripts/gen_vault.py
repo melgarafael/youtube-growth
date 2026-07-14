@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Gera o vault do usuario a partir de um briefing, e valida com verify_links."""
-import os, sys, json, shutil
+import os, sys, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES = os.path.join(os.path.dirname(HERE), "templates")
