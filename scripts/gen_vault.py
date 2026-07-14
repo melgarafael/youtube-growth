@@ -12,13 +12,15 @@ def _render(text, briefing):
         text = text.replace("{{" + k + "}}", str(v).strip() or "_(a definir)_")
     return text
 
-def gen_vault(briefing, dest):
+def gen_vault(briefing, dest, overwrite=True):
     os.makedirs(dest, exist_ok=True)
     for dp, _, fns in os.walk(TEMPLATES):
         for fn in fns:
             src = os.path.join(dp, fn)
             rel = os.path.relpath(src, TEMPLATES)
             out = os.path.join(dest, rel)
+            if not overwrite and os.path.exists(out):
+                continue  # preserva edição do usuário num re-run
             os.makedirs(os.path.dirname(out), exist_ok=True)
             content = _render(open(src, encoding="utf-8").read(), briefing)
             with open(out, "w", encoding="utf-8") as f:
