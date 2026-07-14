@@ -1,0 +1,34 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "youtube-growth",
+  "description": "Uma agência de crescimento de YouTube guiada por IA que roda no seu terminal e conhece o SEU canal — onboarding, conexão via API, benchmark, SEO/GEO e edição. Para qualquer criador, qualquer nicho.",
+  "owner": {
+    "name": "Rafael Melgaço",
+    "email": "rafael@maudibrasil.com.br"
+  },
+  "plugins": [
+    {
+      "name": "youtube-growth",
+      "description": "Transforma qualquer sessão do Claude Code no diretório do seu canal numa agência de crescimento de YouTube: faz o briefing do canal, conecta seu YouTube (guiado passo a passo), lê seus dados reais e monta um segundo cérebro editável. Fase 1: onboarding + conexão.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Rafael Melgaço"
+      },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/melgarafael/youtube-growth",
+      "repository": "https://github.com/melgarafael/youtube-growth",
+      "license": "MIT",
+      "keywords": [
+        "youtube",
+        "growth",
+        "seo",
+        "geo",
+        "ai-agent",
+        "claude-code",
+        "content-creation",
+        "second-brain"
+      ]
+    }
+  ]
+}
