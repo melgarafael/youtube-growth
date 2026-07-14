@@ -3,6 +3,7 @@
 import os, re, sys
 
 LINK = re.compile(r"\[\[([^\]]+)\]\]")
+FENCE = re.compile(r"```.*?```", re.DOTALL)
 CODE = re.compile(r"`[^`]*`")
 HARNESS = {"CLAUDE.md", "AGENTS.md", "GEMINI.md", "README.md"}
 NO_SCAN = {"CLAUDE.md", "AGENTS.md", "GEMINI.md"}
@@ -27,7 +28,7 @@ def verify_links(root, exclude_dirs=("node_modules", ".git", ".venv")):
         rel = os.path.relpath(f, root)
         if os.path.basename(f) in NO_SCAN:
             continue
-        txt = CODE.sub("", open(f, encoding="utf-8").read())
+        txt = CODE.sub("", FENCE.sub("", open(f, encoding="utf-8").read()))
         targets = [m.replace("\\|", "|").split("|")[0].split("#")[0].rstrip("\\").strip()
                    for m in LINK.findall(txt)]
         targets = [t for t in targets if t]
@@ -36,9 +37,11 @@ def verify_links(root, exclude_dirs=("node_modules", ".git", ".venv")):
                 broken.append((rel, t))
             else:
                 key = t.lstrip("./")
-                hit = by_rel.get(key) or by_rel.get(by_base.get(key, [None])[0])
-                if hit:
-                    incoming[os.path.relpath(hit, root)] += 1
+                if key in by_rel:
+                    incoming[os.path.relpath(by_rel[key], root)] += 1
+                else:
+                    for cand in by_base.get(key, []):
+                        incoming[os.path.relpath(by_rel[cand], root)] += 1
         if not targets:
             base = os.path.basename(f)
             is_raw = "/benchmark/" in f and base in ("RELATORIO.md", "RECOMENDACOES.md")
