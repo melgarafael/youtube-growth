@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+# segredos nunca versionados (o config dir vive fora do repo, mas defesa em profundidade)
+client_secret*.json
+token*.json
+.youtube-growth/
