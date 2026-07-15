@@ -131,11 +131,11 @@ Seus segredos (client_secret, token) **nunca** entram no repo — ficam em `~/.c
 Este projeto está sendo construído em fatias, cada uma testada de verdade antes de entrar. Honestidade acima de hype:
 
 - [x] **Fase 1 — Onboarding + Conexão** *(v0.1, live)* — briefing, conexão guiada do YouTube, enriquecimento do canal real, geração do vault.
-- [ ] **Fase 2 — O Motor** — benchmark de concorrentes, pipeline de pautas, thumbnails anti-slop, edição de metadados (SEO/GEO) e edição de vídeo (cenas Remotion).
+- [x] **Fase 2 — O Motor** *(v0.2, no plugin · em teste real)* — benchmark de concorrentes, pipeline de pautas, thumbnails anti-slop, metadados SEO/GEO, cenas Remotion, aprendizado com vídeos, receita e mapa vídeo→oferta. Skills portadas e generalizadas; agora em validação com canais conectados.
 - [ ] **Fase 3 — O Ciclo de Vídeo** — o conductor que te leva ponta a ponta: tema → gravar → editar → agendar → publicar.
-- [ ] Instalação em um clique · internacionalização (i18n).
+- [~] Instalação em um comando (OpenClaw ✅) · internacionalização (i18n).
 
-> As skills da Fase 2 já existem como protótipos; estão sendo de-generalizadas (tirando o que é específico de um canal) pra entrarem no plugin. Acompanhe as issues.
+> Fase 2: as capacidades já **entram no plugin** (v0.2). O que segue em aberto é o *battle-test* delas no formato plugin, com canal real conectado — honestidade acima de hype.
 
 ## 🧭 O método (a opinião por trás)
 
