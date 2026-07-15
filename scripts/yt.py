@@ -97,6 +97,50 @@ def set_caption(vid, srtfile, lang="pt", name="pt-corrigida"):
     y.captions().insert(part="snippet", body=body, media_body=media).execute()
     print("LEGENDA ENVIADA:", vid, lang)
 
+def set_status(vid, privacy, publish_at=None):
+    """Agenda ou publica um vídeo JÁ enviado. privacy = public|unlisted|private.
+    AGENDAR: passe publish_at em ISO 8601 UTC (ex.: 2026-08-01T13:00:00Z) — o YouTube
+    exige privacyStatus=private junto do publishAt. Preserva os demais campos de status."""
+    y = svc()
+    cur = y.videos().list(part="status", id=vid).execute()["items"][0]["status"]
+    keep = ("license", "embeddable", "publicStatsViewable", "selfDeclaredMadeForKids")
+    status = {k: cur[k] for k in keep if k in cur}
+    if publish_at:
+        status["privacyStatus"] = "private"
+        status["publishAt"] = publish_at
+    else:
+        status["privacyStatus"] = privacy  # publicar/despublicar imediato
+    y.videos().update(part="status", body={"id": vid, "status": status}).execute()
+    when = f"agendado p/ {publish_at}" if publish_at else f"privacidade={privacy}"
+    print("STATUS ATUALIZADO:", vid, "|", when)
+
+def upload(videofile, jsonfile):
+    """Envia um arquivo de vídeo (videos.insert, resumável). Lê os metadados de um JSON:
+    {title, description, tags, categoryId, privacyStatus, publishAt, madeForKids}.
+    Padrão = PRIVADO. Se publishAt (ISO 8601 UTC) vier, agenda (privacyStatus=private)."""
+    y = svc()
+    meta = json.load(open(jsonfile, encoding="utf-8"))
+    snippet = {"title": meta["title"], "description": meta.get("description", ""),
+               "tags": meta.get("tags", []), "categoryId": meta.get("categoryId", "22")}
+    for k in ("defaultLanguage", "defaultAudioLanguage"):
+        if meta.get(k): snippet[k] = meta[k]
+    status = {"privacyStatus": meta.get("privacyStatus", "private"),
+              "selfDeclaredMadeForKids": bool(meta.get("madeForKids", False))}
+    if meta.get("publishAt"):
+        status["privacyStatus"] = "private"
+        status["publishAt"] = meta["publishAt"]
+    media = MediaFileUpload(videofile, resumable=True)
+    req = y.videos().insert(part="snippet,status", body={"snippet": snippet, "status": status},
+                            media_body=media)
+    resp = None
+    while resp is None:
+        prog, resp = req.next_chunk()
+        if prog:
+            print(f"  upload {int(prog.progress() * 100)}%", file=sys.stderr)
+    print("UPLOAD OK:", resp["id"], "| privacidade:", status["privacyStatus"],
+          "| publishAt:", status.get("publishAt", "-"), file=sys.stderr)
+    print(resp["id"])  # stdout = videoId (p/ o conductor encadear)
+
 # ---------------------------------------------------------------------------
 # Analytics API (CTR, retenção, inscritos, receita) — precisa dos escopos
 # yt-analytics(.monetary).readonly no token. Se falhar por escopo, reautorizar
@@ -165,5 +209,8 @@ if __name__ == "__main__":
      "update-desc": lambda: update_desc(sys.argv[2], sys.argv[3]),
      "set-snippet": lambda: set_snippet(sys.argv[2], sys.argv[3]),
      "set-caption": lambda: set_caption(sys.argv[2], sys.argv[3]),
+     "set-status": lambda: set_status(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else "private",
+                                      sys.argv[4] if len(sys.argv) > 4 else None),
+     "upload": lambda: upload(sys.argv[2], sys.argv[3]),
      "analytics": lambda: analytics(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else 28),
      "channel": lambda: channel_analytics(sys.argv[2] if len(sys.argv) > 2 else 28)}[cmd]()

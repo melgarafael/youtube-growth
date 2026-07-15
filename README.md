@@ -132,10 +132,10 @@ Este projeto está sendo construído em fatias, cada uma testada de verdade ante
 
 - [x] **Fase 1 — Onboarding + Conexão** *(v0.1, live)* — briefing, conexão guiada do YouTube, enriquecimento do canal real, geração do vault.
 - [x] **Fase 2 — O Motor** *(v0.2, no plugin · em teste real)* — benchmark de concorrentes, pipeline de pautas, thumbnails anti-slop, metadados SEO/GEO, cenas Remotion, aprendizado com vídeos, receita e mapa vídeo→oferta. Skills portadas e generalizadas; agora em validação com canais conectados.
-- [ ] **Fase 3 — O Ciclo de Vídeo** — o conductor que te leva ponta a ponta: tema → gravar → editar → agendar → publicar.
+- [x] **Fase 3 — O Ciclo de Vídeo** *(v0.3, no plugin · em teste real)* — o conductor (`youtube-cycle`) que te leva ponta a ponta: tema → roteiro → editar → agendar → publicar, regendo as outras skills e rastreando onde cada vídeo está. Upload/agendamento pela API (`bin/yt upload` · `bin/yt set-status`).
 - [~] Instalação em um comando (OpenClaw ✅) · internacionalização (i18n).
 
-> Fase 2: as capacidades já **entram no plugin** (v0.2). O que segue em aberto é o *battle-test* delas no formato plugin, com canal real conectado — honestidade acima de hype.
+> Fases 2 e 3: as capacidades já **entram no plugin** (v0.2 / v0.3). O que segue em aberto é o *battle-test* delas no formato plugin, com canal real conectado — honestidade acima de hype.
 
 ## 🧭 O método (a opinião por trás)
 
