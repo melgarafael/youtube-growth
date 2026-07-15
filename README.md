@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-black.svg)](./LICENSE)
 [![Feito para Claude Code](https://img.shields.io/badge/feito%20para-Claude%20Code-d97757.svg)](https://claude.com/claude-code)
-[![Status](https://img.shields.io/badge/status-v0.1%20%C2%B7%20onboarding%20live-blue.svg)](#-status--roadmap)
+[![Status](https://img.shields.io/badge/status-v0.2%20%C2%B7%2014%20skills-blue.svg)](#-status--roadmap)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#-contribuindo)
 [![pt-br](https://img.shields.io/badge/idioma-pt--br-009c3b.svg)](#)
 
@@ -74,16 +74,35 @@ Sem SaaS, sem mandar a credencial do seu canal pra servidor de terceiro. O token
 
 ## 🚀 Começando
 
-**Requisitos:** [Claude Code](https://claude.com/claude-code) · um canal no YouTube · uma conta Google (pra criar o projeto no Google Cloud — a IA te guia).
+**Requisitos:** [Claude Code](https://claude.com/claude-code) **ou** [OpenClaw](https://openclaw.ai) · um canal no YouTube · uma conta Google (pra criar o projeto no Google Cloud — a IA te guia).
+
+### No Claude Code
 
 ```bash
-# 1. No Claude Code, adicione o marketplace e instale o plugin
+# 1. Adicione o marketplace e instale o plugin
 /plugin marketplace add melgarafael/youtube-growth
 /plugin install youtube-growth@youtube-growth
 ```
 
+### No OpenClaw — um comando
+
 ```bash
-# 2. Vá até a pasta do seu canal (ou crie uma) e comece
+openclaw plugins install youtube-growth --marketplace melgarafael/youtube-growth
+```
+
+> 💡 **Zero restart:** instale o plugin **antes** de começar a usar (a primeira sessão já
+> carrega tudo). Se o seu gateway já estava rodando, recarregue com `openclaw gateway restart`
+> — ou rode em uma linha só:
+> ```bash
+> openclaw plugins install youtube-growth --marketplace melgarafael/youtube-growth && openclaw gateway restart
+> ```
+> `--marketplace` aceita `melgarafael/youtube-growth` ou a URL completa do repo. O prefixo
+> `github:` **não** funciona, e passar a URL sem `--marketplace` dá `URLs are not allowed`.
+
+### Depois (em qualquer um dos dois)
+
+```bash
+# Vá até a pasta do seu canal (ou crie uma) e comece
 /youtube-growth:start
 ```
 
