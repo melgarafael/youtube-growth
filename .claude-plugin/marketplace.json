@@ -9,8 +9,8 @@
   "plugins": [
     {
       "name": "youtube-growth",
-      "description": "Transforma qualquer sessão do Claude Code no diretório do seu canal numa agência de crescimento de YouTube: faz o briefing do canal, conecta seu YouTube (guiado passo a passo), lê seus dados reais e monta um segundo cérebro editável. Fase 1: onboarding + conexão.",
-      "version": "0.1.0",
+      "description": "Transforma qualquer sessão do Claude Code no diretório do seu canal numa agência de crescimento de YouTube: onboarding + conexão via API (guiada), benchmark de concorrentes, SEO/GEO dos vídeos, pipeline de conteúdo, thumbnails, aprendizado com vídeos, mapa vídeo→oferta, receita, GEO do site e motion (Remotion). Lê seus dados reais e monta um segundo cérebro editável.",
+      "version": "0.2.0",
       "author": {
         "name": "Rafael Melgaço"
       },

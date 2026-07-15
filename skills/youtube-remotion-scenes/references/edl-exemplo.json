@@ -1,0 +1,15 @@
+{
+  "footage": "/caminho/para/seu-video.mp4",
+  "fps": 30,
+  "_doc": "EDL de exemplo (genérico) usando as 3 cenas do kit mínimo. mode: full = tela cheia opaca (afirmação/tese, a tela é o fundo) · partial = elemento no canto (alpha), quando o footage não pode ser tampado. 'at' = segundo EXATO da fala (pegue no SRT). Troque textos/valores pelo conteúdo do seu vídeo; crie novas cenas a partir de project/src/fx.tsx.",
+  "scenes": [
+    { "at": 12, "comp": "DossieCena", "mode": "full",
+      "props": {"emoji": "🎯", "title": "A frase-tese do seu vídeo aqui", "annotation": "o subponto que reforça a tese", "annotationHighlight": "reforça"} },
+    { "at": 48, "comp": "MotionNumero", "mode": "partial",
+      "props": {"value": 278, "prefix": "+", "caption": "a métrica que você citou", "captionHighlight": "métrica", "transparent": true, "anchor": "top"} },
+    { "at": 96, "comp": "MotionLettering", "mode": "full",
+      "props": {"title": "a PALAVRA que precisa cravar", "highlight": "PALAVRA", "impactFrame": 16} },
+    { "at": 140, "comp": "DossieCena", "mode": "full",
+      "props": {"emoji": "🚀", "title": "o call-to-action / virada final", "annotation": "o próximo passo do espectador", "annotationHighlight": "próximo passo"} }
+  ]
+}
